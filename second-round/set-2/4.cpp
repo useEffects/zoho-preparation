@@ -1,19 +1,32 @@
 #include <iostream>
+#include <stack>
 #include <string>
 using namespace std;
 
-int main() {
-    string string1 = "test123string";
-    string string2 = "123";
-    for (int i = 0; i < string1.size(); i++) {
-        int j = 0;
-        while (j < string2.size() && string1[i] == string2[j]) {
-            i++;
-            j++;
-        }
-        if (j == string2.size()) {
-            cout << i - j << endl;
+bool isValid(string input) {
+    stack<char> myStack;
+    for (int i = 0; i < input.size(); i++) {
+        if (input[i] == '(') {
+            myStack.push(input[i]);
+        } else if (input[i] == ')') {
+            myStack.pop();
+        } else if (input[i] == '*' || input[i] == '/' || input[i] == '+' || input[i] == '-') {
+            if (i == 0 || i == input.size() - 1) {
+                return false;
+            }
+            if (!(input[i - 1] >= 'a' && input[i - 1] <= 'z' && input[i + 1] >= 'a' && input[i + 1] <= 'z')) {
+                return false;
+            }
         }
     }
-    return 0;
+    return myStack.empty();
+}
+
+int main() {
+    string input1 = "(a+b)(a*b)";
+    string input2 = "(ab)(ab+)";
+    string input3 = "((a+b)";
+    cout << isValid(input1) << endl;
+    cout << isValid(input2) << endl;
+    cout << isValid(input3) << endl;
 }
