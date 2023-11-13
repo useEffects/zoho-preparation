@@ -1,21 +1,24 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
 
-bool solver(string input) {
-    if (input.size() == 1) {
-        return stoi(input) == 1;
-    }
-    int num = 0;
-    for (auto i : input) {
-        num += (i - '0');
-    }
-    return solver(to_string(num));
-}
-
 int main() {
-    string input = "50112";
-    cout << solver(input) << endl;
+    string str = "50113";
+
+    while (true) {
+        int c = 0;
+        if (str.size() == 1) {
+            bool ans = stoi(str) == 1;
+            cout << ans;
+            return 0;
+        }
+        for (int i = 0; i < str.size(); i++) {
+            c += str[i] - '0';
+        }
+        str = to_string(c);
+    }
+
     return 0;
 }
